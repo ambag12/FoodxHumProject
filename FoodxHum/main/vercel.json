@@ -1,0 +1,17 @@
+{
+    "builds": [{
+        "src": "FoodxHum/main/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
+    }],
+    "routes": [
+   {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+        {
+            "src": "/(.*)",
+            "dest": "FoodxHum/main/wsgi.py"
+        }
+    ]
+}
