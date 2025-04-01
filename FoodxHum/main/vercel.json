@@ -1,21 +1,34 @@
 {
     "builds": [
         {
-            "src": "FoodxHum/main/manage.py",
+            "src": "FoodxHum/main/wsgi.py",
             "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
- 
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.11",
+                "includeFiles": [
+                    "FoodxHum/main/**",
+                    "FoodxHum/**"
+                ]
+            }
+        },
+        {
+            "src": "FoodxHum/main/static/**",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/static/(.*)",
-            "dest": "/public/$1"
+            "dest": "FoodxHum/main/static/$1"
+        },
+        {
+            "src": "/media/(.*)",
+            "dest": "FoodxHum/main/media/$1"
         },
         {
             "src": "/(.*)",
-            "dest": "FoodxHum/main/manage.py"
+            "dest": "FoodxHum/main/wsgi.py"
         }
-    ],
-    "outputDirectory": "public"
+    ]
 }
