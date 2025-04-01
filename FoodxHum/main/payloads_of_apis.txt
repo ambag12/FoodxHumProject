@@ -1,0 +1,7 @@
+{
+    "name": "John",
+    "password": "mypassword",
+    "preference": ["Fast Food", "BBQ"],
+    "location": "New York",
+    "phone_number": "123456789"
+}
