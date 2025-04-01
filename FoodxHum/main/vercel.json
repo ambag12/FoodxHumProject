@@ -29,5 +29,6 @@
             "src": "/(.*)",
             "dest": "FoodxHum/main/main/wsgi.py"
         }
-    ]
+    ],
+	"outputDirectory": "FoodxHum/main/public"
 }
