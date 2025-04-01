@@ -1,0 +1,19 @@
+{
+    "builds": [
+        {
+            "src": "FoodxHum/main/manage.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/public/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "FoodxHum/main/manage.py"
+        }
+    ],
+    "outputDirectory": "public"
+}
