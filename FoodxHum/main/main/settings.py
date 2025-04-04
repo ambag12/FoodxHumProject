@@ -30,15 +30,18 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = secrets.token_urlsafe(50)  
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 3600  # or higher
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh', 'localhost', '127.0.0.1']
+# SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_SECONDS = 3600  # or higher
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# ALLOWED_HOSTS = ['.vercel.app', '.now.sh', 'localhost', '127.0.0.1']
+DEBUG = True
 
+
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [

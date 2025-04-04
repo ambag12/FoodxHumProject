@@ -17,7 +17,7 @@ import bcrypt
 import json
 # Create your views here.
 from .models import *
-
+import requests
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def Register(request):
@@ -64,7 +64,7 @@ class UserLogin(APIView):
                 token_url = reverse('token_obtain_pair')
                 token_url = request.build_absolute_uri(token_url)
                 payload = {'username': user, 'password': password}
-                token_response = request.post(token_url, json=payload)
+                token_response = requests.post(token_url, json=payload)
                 if token_response.status_code == 200:
                     request.session['auth_token'] = token_response.json()['access']
                     return Response({
@@ -76,7 +76,7 @@ class UserLogin(APIView):
                     return Response({'error': f'Invalid credentials token not generated, {token_response.status_code} and {token_response.text}'}, status=status.HTTP_401_UNAUTHORIZED)
             else:
                 return Response({"error": "Invalid password!"}, status=status.HTTP_401_UNAUTHORIZED)
-        except Register.DoesNotExist:
+        except UserRegister.DoesNotExist:
             return Response({"error": "User not found!"}, status=status.HTTP_404_NOT_FOUND)    
 
 @api_view(['GET'])    
