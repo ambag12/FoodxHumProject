@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "91390f6f-9538-4e82-918d-ea540e632f7a",
+		"name": "FoodxHum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28999575"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/user_lst",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ1MDcwMTkzLCJpYXQiOjE3NDUwNjY1OTMsImp0aSI6ImFmNzk4MjAwMTUxYjRlMDk5Yzg1MjM5ZGUzMmVkMTdhIiwidXNlcl9pZCI6MX0.x8CjaMu7-CHQ0vFFRtw7f7uZvTUH5u5XXZyPmfCPm2I",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_lst",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"user_lst"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/user_lst Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyNDg1NjA4LCJpYXQiOjE3NTI0ODIwMDgsImp0aSI6Ijg3OTQ4MjNiMjhkMTQ3MzA5MjRlYTk3NDkzOTdiMTQ3IiwidXNlcl9pZCI6MX0.0FoQMcWkxKSjJuy2tH44g6PtHBAzjG1EwwnprJeg0a0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_lst",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"user_lst"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/token/",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"name\",\r\n    \"password\": \"hashed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/api/token/",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/token/ Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"name\",\r\n    \"password\": \"hashed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/restaraunt_x_datab/Yemek/",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Area",
+						"value": "DHA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/restaraunt_x_datab/Yemek/",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"restaraunt_x_datab",
+						"Yemek",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/restaraunt_x_datab/Pizza Point/",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Area",
+						"value": "DHA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/restaraunt_x_datab/Yemek/",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"restaraunt_x_datab",
+						"Yemek",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/dha-restaraunts",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/dha-restaraunts",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"dha-restaraunts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/user_preferences",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"John\",\r\n    \"password\": \"mypassword\",\r\n    \"preference\": [\"Fast Food\", \"BBQ\"],\r\n    \"location\": \"Khayaban-e-Shamsheer, Phase V Stadium Commercial Area Defence V Defence Housing Authority, Karachi, Karachi City, Sindh , Pakistan\",\r\n    \"phone_number\": \"123456789\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_preferences",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"user_preferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ahmed Mujataba\",\r\n    \"password\": \"ambaig\",\r\n    \"preference\": \"BBQ,Fast Food\",\r\n    \"location\": \"DHA, phase 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/signup",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"name\",\r\n    \"password\": \"hashed\",\r\n    \"preference\": \"BBQ\",\r\n    \"location\": \"DHA, phase 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/foodxhum/signup",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"foodxhum",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/foodxhum/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"name\",\r\n    \"password\": \"hashed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/login",
+					"protocol": "https",
+					"host": [
+						"foodxhumproject-1",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"foodxhum",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
