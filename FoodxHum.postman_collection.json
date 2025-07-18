@@ -33,10 +33,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_lst",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/user_lst",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -75,10 +75,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_lst",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/user_lst",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -108,10 +108,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/api/token/",
+					"raw": "https://foodxhumproject-5.onrender.com/api/token/",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -175,10 +175,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/restaraunt_x_datab/Yemek/",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/restaraunt_x_datab/Yemek/",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -242,10 +242,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/dha-restaraunts",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/dha-restaraunts",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -275,10 +275,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/user_preferences",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/user_preferences",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
@@ -370,10 +370,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://foodxhumproject-1.onrender.com/foodxhum/login",
+					"raw": "https://foodxhumproject-5.onrender.com/foodxhum/login",
 					"protocol": "https",
 					"host": [
-						"foodxhumproject-1",
+						"foodxhumproject-5",
 						"onrender",
 						"com"
 					],
