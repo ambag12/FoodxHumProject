@@ -8,6 +8,7 @@ The application will be mix of two parts one shall market you all the restaraunt
 
 ## How much achieved
 To be honest not much as this idea is at it's inception but the there are some processes that are developed from the backend:
+----
 -- login/signup process
 -- OAuth2 authentication
 -- a dataset that is stored in Aiven mysql of restaraunts in different areas of karachi
