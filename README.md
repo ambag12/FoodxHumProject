@@ -13,4 +13,4 @@ To be honest not much as this idea is at it's inception but the there are some p
 -- a dataset that is stored in Aiven mysql of restaraunts in different areas of karachi
 -- to accurately match the entred user's location with restaraunts location on the basis of longitude and latitude so the templates are ordered from the nearest to the furthest from user's entered location
 -- Users shall see the For you option where he will get his/hers preferences entered at the time of registration
---
+
