@@ -1,17 +1,44 @@
 # FoodxHum (INCOMPLETE)
 
-Idea is to create a way of quick small payments for food lovers who choose to go for online transactions rather the Cash or Card payment, As from my personal expriences easypaisa and other banking app they are quite slow and takes time to initiate themselves at first this for my is a bummer.
+The idea is to create a way for quick, small payments for food lovers who prefer online transactions over cash or card payments.  
+From my personal experience, apps like Easypaisa and other banking apps are often slow to launch and initialize — which is a bummer.  
 
-## Waht will be the application
+---
 
-The application will be mix of two parts one shall market you all the restaraunts near your location and the other one will be our payment application where you as a user can integrate you wallets in this way we will free ourselves with any instant access to ones personal account details, the goal is not to make the process of transaction fast since the compliance checks are necessary for all users this is something we have no control over but to make sure user will have a fast and agile interface to perform low amount of transactions
+## What Will Be the Application?
 
-## How much achieved
-To be honest not much as this idea is at it's inception but the there are some processes that are developed from the backend:
-----
--- login/signup process
--- OAuth2 authentication
--- a dataset that is stored in Aiven mysql of restaraunts in different areas of karachi
--- to accurately match the entred user's location with restaraunts location on the basis of longitude and latitude so the templates are ordered from the nearest to the furthest from user's entered location
--- Users shall see the For you option where he will get his/hers preferences entered at the time of registration
+The application will have **two main parts**:
+1. **Restaurant Marketplace:**  
+   It will list all the restaurants near the user's location.
+2. **Payment Application:**  
+   Users can integrate their digital wallets, allowing instant transactions without exposing personal account details.  
+
+The goal is **not** to bypass compliance checks (as they are necessary), but to provide a **fast and agile interface** for performing small transactions.
+
+---
+
+## Current Progress
+
+To be honest, not much progress has been made yet as this idea is still in its **inception stage**. However, some backend processes are already developed:
+
+- **Login/Signup Process**
+- **OAuth2 Authentication**
+- **A dataset stored in Aiven MySQL** containing restaurants in various areas of Karachi.
+- **Location Matching:**  
+  Matches the user’s entered location with restaurant locations using **longitude and latitude**, displaying templates from nearest to farthest.
+- **Personalized Recommendations:**  
+  A "For You" section where users see personalized recommendations based on preferences entered during registration.
+
+---
+
+## Next Steps
+- Develop the payment interface.
+- Integrate multiple digital wallets.
+- Improve the restaurant recommendation algorithm.
+- Build a user-friendly mobile/desktop interface.
+
+---
+
+## Status
+**Work in progress.** Contributions and ideas are welcome!
 
