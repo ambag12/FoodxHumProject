@@ -53,10 +53,10 @@ def get_dharestaraunts_qry(request, restaraunt):
 @permission_classes([AllowAny])
 def restaraunt_x_database(request,restaraunt):
     Area=request.META.get('HTTP_AREA')
-    df=pd.read_json(rf"C:\Users\ambai\FoodxHum\main\{Area}.json")
-    print({"address":df[restaraunt]['Address']})
     if request.method=='PATCH':
+        df=pd.read_json(rf"C:\Users\ambai\FoodxHum\main\{Area}.json")
         dest_address=df[restaraunt]['Address']
+        print({"address":df[restaraunt]['Address']})
         cleaned_address = re.sub(r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building|R22P|JRG|)\b', '', dest_address, flags=re.IGNORECASE).strip()
         geolocator = Photon(user_agent="foodxhum_geocoder")
         location = geolocator.geocode(cleaned_address,timeout=10)
