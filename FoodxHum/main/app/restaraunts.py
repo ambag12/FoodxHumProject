@@ -10,34 +10,62 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from django.urls import reverse
 import bcrypt
-import json
+import json,os,requests
 import re
 from geopy.geocoders import Photon
 import pandas as pd
-# # # Create your views here.
+from django.conf import settings
+from requests.exceptions import JSONDecodeError as RequestsJSONDecodeError
 from .models import Restaraunt
+from main.settings import BASE_DIR
+import environ,math
+import numpy as np
+
+env= environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+def _normalize_value(v):
+    # handle pandas/numpy missing values and numpy scalars
+    if isinstance(v, (np.generic,)):
+        v = v.item()
+    if isinstance(v, float):
+        # catches both float('nan') and normal floats
+        return None if math.isnan(v) else v
+    if pd.isna(v):
+        return None
+    return v
+
+def _normalize(obj):
+    # recursively normalize dicts/lists
+    if isinstance(obj, dict):
+        return {k: _normalize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_normalize(v) for v in obj]
+    return _normalize_value(obj)
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([AllowAny])
 def get_dharestaraunts(request):
-    if request.method == 'GET':
-        restaraunt=pd.read_excel(r'D:\sample_data_for_foodxhum\Karachi\DHA.xlsx',engine='openpyxl')
-        max_count=restaraunt['Title'].count()
-        data_dict={}
-        for i in range(max_count):
-            data_dict[restaraunt['Title'][i]] = {
-                "name": restaraunt['Title'][i],
-                "Reviews": restaraunt['Reviews'][i],
-                "Review_Points": restaraunt['Review_Points'][i],
-                "Address": restaraunt['Address'][i],
-                "Category": restaraunt['Category'][i]
-            }
-            
-        df=pd.DataFrame(data_dict)
-        df.to_json('DHA.json',indent=4,index=True)
-        df = df.where(pd.notna(df), None)
-        return Response({'restraunts':df.to_dict(orient="records"),'none values':df.isna()},status=status.HTTP_200_OK)
+    area=request.query_params.get('area', 'Bahadurabad')
+    file_path = rf"D:\DataSet\Karachi\{area}.xlsx"
+    if not os.path.isfile(file_path):
+        return Response({"error": "Data file not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        df = pd.read_excel(file_path, engine='openpyxl')
+    except Exception as e:
+        return Response({"error": "Failed to parse Excel file.", "detail": str(e)},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    cols = ['Title', 'Reviews', 'Review_Points', 'Address', 'Category']
+    df = df.reindex(columns=cols)  # keep columns safe if some are missing
+
+    # convert to list-of-dicts and normalize once (fast & simple)
+    records = df.rename(columns={'Title': 'name'}).to_dict(orient='records')
+    restaurants = [_normalize(r) for r in records]
+
+    return Response({area: restaurants}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([JWTAuthentication])
@@ -51,47 +79,37 @@ def get_dharestaraunts_qry(request, restaraunt):
 @api_view(['GET','POST','PATCH'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([AllowAny])
-def restaraunt_x_database(request,restaraunt):
-    Area=request.META.get('HTTP_AREA')
-    if request.method=='PATCH':
-        df=pd.read_json(rf"C:\Users\ambai\FoodxHum\main\{Area}.json")
-        dest_address=df[restaraunt]['Address']
-        print({"address":df[restaraunt]['Address']})
-        cleaned_address = re.sub(r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building|R22P|JRG|)\b', '', dest_address, flags=re.IGNORECASE).strip()
-        geolocator = Photon(user_agent="foodxhum_geocoder")
-        location = geolocator.geocode(cleaned_address,timeout=10)
-        if location:
-                print("Full Address:", location.address,"\n location.latitude:",location.latitude,"\n location.longitude:",location.longitude)
-                lat=location.latitude
-                long=location.longitude
-                restaraunt_output= (location.latitude, location.longitude)
-        else:
-                restaraunt_output=None
-                lat=None
-                long=None
-        print(restaraunt_output)
-        update_qury=Restaraunt.objects.filter(restaraunt=restaraunt).update(location=str(df[restaraunt]['Address']),latitude=lat,longitude=long)
-        if update_qury > 0: 
-            updated_instance = Restaraunt.objects.get(restaraunt=restaraunt)  # Fetch updated instance
-            serializer = RestarauntSerializer(updated_instance)
-            return Response({"Updated record": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            insert=Restaraunt.objects.create(restaraunt=restaraunt,location=str(df[restaraunt]['Address']),latitude=lat,longitude=long)
-            serializer=RestarauntSerializer(insert)
-            if serializer.is_valid():
-                serializer.save()
-                return JsonResponse(serializer.data,status=status.HTTP_201_CREATED)
-            return Response({"error":serializer.error_messages},status=status.HTTP_404_NOT_FOUND)
+def restaraunt_x_database(request):
+    try:
+        file_url = env('File_url')
+        data=requests.get(file_url)
+        data.raise_for_status()
+        df= data.json()
+        print("df:", df)
+        # new_dict = {}
+        # df_count= len(df['Bahadurabad'])
+        # i=0
+        # list_of_restaraunts = []
+        # while i =< df_count:
+        #     list_of_restaraunts.append({"name":df['Bahadurabad'][i]['name'],"address":df['Bahadurabad'][i]['Address']})
+        #     i += 1
+        # print("list_of_restaraunts:", list_of_restaraunts)
+    except (RequestsJSONDecodeError, requests.RequestException):
+        return Response({"error": "Failed to fetch or parse data from the URL."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
     if request.method == "GET":
-        get_qry=Restaraunt.objects.get(restaraunt=restaraunt)
-        serializer=RestarauntSerializer(get_qry)
-        return Response({'data':serializer.data},status=status.HTTP_200_OK)
+        restaraunt=request.GET.get("restaraunt", None)
+        if restaraunt:
+            get_qry=Restaraunt.objects.filter(restaraunt=restaraunt).first()
+            serializer=RestarauntSerializer(get_qry)
+            return Response({'data':serializer.data},status=status.HTTP_200_OK)
+        return Response({'data':"Request made "},status=status.HTTP_200_OK)
     if request.method == "POST":
-        restaraunt=pd.read_excel(rf'D:\sample_data_for_foodxhum\Karachi\{Area}.xlsx',engine='openpyxl')
         data_dict = {}
-        for i in range(1,10):
-            title = restaraunt.loc[i, 'Title']
-            dest_address = restaraunt.loc[i, 'Address']
+        created=[]
+        for i in range(0,10):
+            title = df['Bahadurabad'][str(i)]['name']
+            dest_address = df['Bahadurabad'][str(i)]['Address']
             cleaned_address = re.sub(r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building|R22P|JRG|)\b', '', dest_address, flags=re.IGNORECASE)
             dest_address=cleaned_address.strip()
             geolocator = Photon(user_agent="foodxhum_geocoder")
@@ -107,20 +125,22 @@ def restaraunt_x_database(request,restaraunt):
                  long=None
             print(restaraunt_output)
             data_dict[title] = {
-            "name": title,
-            "Reviews": restaraunt.loc[i, 'Reviews'],
-            "Review_Points": restaraunt.loc[i, 'Review_Points'],
-            "Address": dest_address,
-            "Category": restaraunt.loc[i, 'Category'],
-            "Latitude": lat,
-            "Longitude": long
-    }
-            print(data_dict)
-            query=Restaraunt.objects.create(restaraunt=title,location=dest_address,latitude=round(lat, 6) if lat is not None else None,longitude=round(long, 6) if long is not None else None)
-            serializer=RestarauntSerializer(data=query)
-            if query and serializer.is_valid():
+            "restaraunt": title,
+            "location": dest_address,
+            "latitude": round(lat, 6) if lat is not None else None,
+            "longitude": round(long, 6) if long is not None else None
+            }
+            obj_data={
+            "restaraunt": title,
+            "location": dest_address,
+            "latitude": round(lat, 6) if lat is not None else None,
+            "longitude": round(long, 6) if long is not None else None
+            }
+            print(df)
+            serializer=RestarauntSerializer(data=obj_data)
+            if obj_data and serializer.is_valid():
                 serializer.save()
-                return JsonResponse(serializer.data,status=status.HTTP_201_CREATED)
+                created.append(serializer.data)
         data_dict=json.dumps(data_dict)
-        return JsonResponse(json.loads(data_dict),status=status.HTTP_201_CREATED)
+        return JsonResponse({"data":created},status=status.HTTP_201_CREATED)
     
