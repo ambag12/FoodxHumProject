@@ -72,8 +72,8 @@ def get_dharestaraunts(request):
 @permission_classes([AllowAny])
 def get_dharestaraunts_qry(request, restaraunt):
     if request.method == 'GET':
-        restaraunt_specific = Restaraunt.objects.get(restaraunt=restaraunt)
-        getdata = RestarauntSerializer(restaraunt_specific)
+        restaraunt_specific = Restaraunt.objects.filter(restaraunt__icontains=restaraunt)
+        getdata = RestarauntSerializer(restaraunt_specific,many=True)
         return Response({'restaraunt data': getdata.data}, status=status.HTTP_200_OK)
 
 @api_view(['GET','POST','PATCH'])
