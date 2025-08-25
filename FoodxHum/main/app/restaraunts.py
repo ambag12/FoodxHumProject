@@ -103,7 +103,10 @@ def restaraunt_x_database(request):
             get_qry=Restaraunt.objects.filter(restaraunt=restaraunt).first()
             serializer=RestarauntSerializer(get_qry)
             return Response({'data':serializer.data},status=status.HTTP_200_OK)
-        return Response({'data':"Request made "},status=status.HTTP_200_OK)
+        else:
+            restaraunt_specific = Restaraunt.objects.all()
+            getdata = RestarauntSerializer(restaraunt_specific, many=True)
+            return Response({'restaraunt data': getdata.data}, status=status.HTTP_200_OK)
     if request.method == "POST":
         data_dict = {}
         created=[]
