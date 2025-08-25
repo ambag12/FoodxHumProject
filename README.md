@@ -1,5 +1,5 @@
 # FoodxHum (INCOMPLETE)
-
+## For now Only few Restaraunts of Bahadrabad and DHA have been used
 The idea is to create a way for quick, small payments for food lovers who prefer online transactions over cash or card payments.  
 From my personal experience, apps like Easypaisa and other banking apps are often slow to launch and initialize — which is a bummer.  
 
