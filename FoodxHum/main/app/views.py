@@ -105,7 +105,7 @@ def user_preferences(request):
         else:
             output=None
             print(output)
-        if re.search(rf"\b(DHA|Defence Housing Authority)\b",user_address):
+        if re.search(rf"\b({location})\b",user_address):
             qry=Restaraunt.objects.raw("""
 SELECT id, restaraunt, latitude, longitude,
        ST_Distance_Sphere(
