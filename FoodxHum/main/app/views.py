@@ -19,11 +19,11 @@ import json
 # Create your views here.
 from .models import *
 import requests
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-LOCATIONIQ_API_KEY = os.getenv("LocationIQ")
+# LOCATIONIQ_API_KEY = os.getenv("LocationIQ")
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def Register(request):
@@ -147,7 +147,7 @@ def user_preferences(request):
         user_address = cleaned_address.strip()
 
         # --- LocationIQ API Call ---
-        API_KEY = LOCATIONIQ_API_KEY   # replace with your key
+        API_KEY = "pk.1626fececd3735b5a6537f6a00877002"   # replace with your key
         url = "https://us1.locationiq.com/v1/search.php"
         params = {
             "key": API_KEY,
