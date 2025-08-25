@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from django.urls import reverse
 from geopy.geocoders import Photon
 import re
+import locationiq
 from geopy.distance import geodesic
 # import requests
 import bcrypt
@@ -18,6 +19,11 @@ import json
 # Create your views here.
 from .models import *
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+LOCATIONIQ_API_KEY = os.getenv("LocationIQ")
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def Register(request):
@@ -88,38 +94,93 @@ def Userreg_list(request):
         serializer=UserRegisterSerializer(get_all,many=True)
         return Response(serializer.data)
 
+# @api_view(['POST'])
+# @authentication_classes([JWTAuthentication])
+# @permission_classes([AllowAny])
+# def user_preferences(request):
+#     if request.method=='POST':
+#         location=request.data.get('location')
+#         #user location
+#         cleaned_address = re.sub(r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building)\b', '', location, flags=re.IGNORECASE)
+#         user_address=cleaned_address.strip()
+#         geolocator = Photon(user_agent="foodxhum_geocoder")
+#         location = geolocator.geocode(user_address,timeout=10)
+#         if location:
+#             print("Full Address:", location.address)
+#             output= (location.latitude, location.longitude)
+#         else:
+#             output=None
+#             print(output)
+#         if re.search(rf"\b({location})\b",user_address):
+#             qry=Restaraunt.objects.raw("""
+# SELECT id, restaraunt, latitude, longitude,
+#        ST_Distance_Sphere(
+#            POINT(longitude, latitude),  
+#            POINT(%s, %s)
+#        ) / 1000 AS distance_km
+# FROM restaraunt
+# WHERE ST_Distance_Sphere(
+#            POINT(longitude, latitude),
+#            POINT(%s, %s)
+#        ) / 1000 < 50;
+# """, [location.longitude, location.latitude, location.longitude, location.latitude])
+
+#         restaurant_list=[restaurant.restaraunt for restaurant in qry]
+#         # distance_output=geodesic(output, destoutput).km
+#         # print(f'{distance_output}km')
+#         return Response({"restaurants": restaurant_list})
+
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([AllowAny])
 def user_preferences(request):
-    if request.method=='POST':
-        location=request.data.get('location')
-        #user location
-        cleaned_address = re.sub(r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building)\b', '', location, flags=re.IGNORECASE)
-        user_address=cleaned_address.strip()
-        geolocator = Photon(user_agent="foodxhum_geocoder")
-        location = geolocator.geocode(user_address,timeout=10)
-        if location:
-            print("Full Address:", location.address)
-            output= (location.latitude, location.longitude)
-        else:
-            output=None
-            print(output)
-        if re.search(rf"\b({location})\b",user_address):
-            qry=Restaraunt.objects.raw("""
-SELECT id, restaraunt, latitude, longitude,
-       ST_Distance_Sphere(
-           POINT(longitude, latitude),  
-           POINT(%s, %s)
-       ) / 1000 AS distance_km
-FROM restaraunt
-WHERE ST_Distance_Sphere(
-           POINT(longitude, latitude),
-           POINT(%s, %s)
-       ) / 1000 < 50;
-""", [location.longitude, location.latitude, location.longitude, location.latitude])
+    if request.method == 'POST':
+        raw_address = request.data.get('location')
 
-        restaurant_list=[restaurant.restaraunt for restaurant in qry]
-        # distance_output=geodesic(output, destoutput).km
-        # print(f'{distance_output}km')
-        return Response({"restaurants": restaurant_list})
+        # Clean user location string
+        cleaned_address = re.sub(
+            r'\b\d+\s*(st|nd|rd|th)?\s*(floor|suite|apartment|apt|room|office|building)\b',
+            '',
+            raw_address,
+            flags=re.IGNORECASE
+        )
+        user_address = cleaned_address.strip()
+
+        # --- LocationIQ API Call ---
+        API_KEY = LOCATIONIQ_API_KEY   # replace with your key
+        url = "https://us1.locationiq.com/v1/search.php"
+        params = {
+            "key": API_KEY,
+            "q": user_address,
+            "format": "json"
+        }
+
+        response = requests.get(url, params=params, timeout=10)
+
+        if response.status_code == 200:
+            data = response.json()
+            if data:
+                lat = float(data[0]["lat"])
+                lng = float(data[0]["lon"])
+                print("Full Address:", data[0]["display_name"])
+
+                # Run distance query
+                qry = Restaraunt.objects.raw("""
+                    SELECT id, restaraunt, latitude, longitude,
+                           ST_Distance_Sphere(
+                               POINT(longitude, latitude),
+                               POINT(%s, %s)
+                           ) / 1000 AS distance_km
+                    FROM restaraunt
+                    WHERE ST_Distance_Sphere(
+                               POINT(longitude, latitude),
+                               POINT(%s, %s)
+                           ) / 1000 < 50;
+                """, [lng, lat, lng, lat])
+
+                restaurant_list = [restaurant.restaraunt for restaurant in qry]
+                return Response({"restaurants": restaurant_list})
+
+        # If no result
+        print("No geocoding result")
+        return Response({"restaurants": []}, status=404)
