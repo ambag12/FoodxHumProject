@@ -1,3 +1,4 @@
+python-dotenv==1.1.1
 locationiq==0.0.2
 asgiref==3.8.1
 attrs==25.3.0
