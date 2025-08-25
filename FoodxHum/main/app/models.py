@@ -11,7 +11,7 @@ class UserRegister(models.Model):
     location = models.TextField()
     name = models.TextField()
     password = models.TextField()
-    phone_number = models.IntegerField(blank=True, null=True)
+    phone_number = models.TextField(blank=True, null=True)
     preference = models.JSONField(db_column='preference', blank=True, null=True)  # Field name made lowercase.
     latitude=models.DecimalField(db_column='latitude',decimal_places=6, max_digits=9,null=True,blank=True)
     longitude=models.DecimalField(db_column='longitude',decimal_places=6, max_digits=9,null=True,blank=True)
